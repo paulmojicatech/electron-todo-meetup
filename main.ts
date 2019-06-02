@@ -1,4 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const MenuService = require('./services/menu/menu.service');
+
+const { app, BrowserWindow, Menu } = require('electron');
 const url = require('url');
 const path = require('path');
 
@@ -20,6 +22,11 @@ function createWindow() {
         })
     );
 
+    // loadMenu
+    const menuService = new MenuService.MenuService(win);+9
+    const template:Electron.MenuItemConstructorOptions[] = menuService.createMenu();
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
     // The following is optional and will open the DevTools:
     win.webContents.openDevTools()
 
