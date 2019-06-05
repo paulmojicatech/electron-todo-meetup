@@ -9,7 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build --base-href ./ && electron ."
+    "electron": "ng build --base-href ./ && electron .",
+    "package-win": "ng build --prod --base-href ./ && electron-packager . --overwrite --platform=win32 --arch=x64 --prune=true --out=release-builds",
+    "package-mac": "ng build --prod --base-href ./ && electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds --electron-version=5.0.2"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +44,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "electron": "^5.0.2",
+    "electron-packager": "^13.1.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
