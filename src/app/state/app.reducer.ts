@@ -12,10 +12,15 @@ const initialState: State = {
 export function reducer(state:State = initialState, action:AppActions):State {
     switch (action.type) {
         case AppActionTypes.AddItem:
-            console.log('Add Item');
+            const updatedToDos = [...state.ToDos, action.payload];
             return {
                 ...state,
-                ToDos: [...state.ToDos, action.payload]
+                ToDos: updatedToDos
+            };
+        case AppActionTypes.LoadFile:
+            return {
+                ...state,
+                ToDos: action.payload
             };
         default:
             return state;

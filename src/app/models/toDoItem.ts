@@ -1,5 +1,5 @@
 export interface IToDoItem {
     Name: string;
-    ToDoDate: string;
+    ToDoDate: Date;
     IsComplete: boolean;
 }

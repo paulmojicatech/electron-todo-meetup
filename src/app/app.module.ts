@@ -9,13 +9,14 @@ import { MatCheckboxModule, MatDividerModule, MatListModule,
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import * as fromApp from './state/app.reducer';
 
 import { environment } from '../environments/environment';
 
+import { reducer } from './state/app.reducer';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { AddItemModalComponent } from './add-item-modal.component';
+import { IpcRendererService } from './services/ipc-renderer.service';
 
 
 export const APP_ROUTES: Route[] = [
@@ -45,16 +46,20 @@ export const APP_ROUTES: Route[] = [
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    StoreModule.forRoot(fromApp),
+    StoreModule.forRoot({}),
+    StoreModule.forFeature('app', reducer),
     StoreDevtoolsModule.instrument({
       name: 'Electron To Do DevTools',
-      maxAge: 25
+      maxAge: 25,
+      logOnly: environment.production
     }),
   ],
   entryComponents: [
     AddItemModalComponent
   ],
-  providers: [],
+  providers: [
+    IpcRendererService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

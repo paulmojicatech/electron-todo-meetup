@@ -1,5 +1,6 @@
-import { dialog, BrowserWindow } from 'electron';
-const icpMainService = require('electron').ipcMain;
+import { dialog, BrowserWindow, MenuItem, app } from 'electron';
+const { ipcMain } = require('electron');
+const fs = require('fs');
 
 export class MenuService {
     constructor(private _win: BrowserWindow) { }
@@ -21,12 +22,22 @@ export class MenuService {
                 click: async () => {
                     const loadedList = await this.loadList();
                     if (loadedList) {
-                        console.log('File selected');
-                        icpMainService.emit('LoadList', { 'List': loadedList });
+                        this._win.webContents.send('LoadList', loadedList);
                     }
+                }
+            },
+            {
+                label: 'Quit',
+                accelerator: 'CmdOrCtrl+Q',
+                click: () => {
+                    app.quit();
                 }
             }
         ]
+    }
+
+    disableMenuItem(item:MenuItem) {
+        item.enabled = false;
     }
 
     private async loadList(): Promise<any> {
@@ -42,7 +53,16 @@ export class MenuService {
                     ]
                 }
             );
-            resolve(file);
+            if (file.length) {
+                await fs.readFile(file[0], (err, data) => {
+                    if (err) {
+                        resolve(err);
+                    }
+                    else {
+                        resolve(data.toLocaleString());
+                    }
+                });
+            }
         });
     }
 }

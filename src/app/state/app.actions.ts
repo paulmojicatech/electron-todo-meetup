@@ -9,7 +9,7 @@ export enum AppActionTypes {
 }
 
 export class LoadFile implements Action {
-    constructor(public payload: string) { }
+    constructor(public payload: IToDoItem[]) { }
     readonly type = AppActionTypes.LoadFile;
 }
 

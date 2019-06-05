@@ -1,10 +1,10 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
-import * as fromApp from './app.reducer';
+import * as appState from './app.reducer';
 
-const getAppFeatureState = createFeatureSelector<fromApp.State>('app');
+const getAppState = createFeatureSelector<appState.State>('app');
 
 export const getToDoItems = createSelector(
-    getAppFeatureState,
+    getAppState,
     state => state.ToDos
 );
