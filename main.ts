@@ -1,4 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+import { ListenerService } from './services/listener.service';
+const MenuService = require('./services/menu/menu.service');
+
+const { app, BrowserWindow, Menu } = require('electron');
 const url = require('url');
 const path = require('path');
 
@@ -8,7 +11,10 @@ function createWindow() {
     // create window
     win = new BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     // load the dist folder from Angular
@@ -20,8 +26,14 @@ function createWindow() {
         })
     );
 
+    // loadMenu
+    const menuService = new MenuService.MenuService(win);+9
+    const template:Electron.MenuItemConstructorOptions[] = menuService.createMenu();
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+
     // The following is optional and will open the DevTools:
-    win.webContents.openDevTools()
+    //win.webContents.openDevTools()
 
     win.on("closed", () => {
         win = null;
@@ -30,6 +42,8 @@ function createWindow() {
 
 app.on("ready", () => {
     createWindow();
+    // load listeners
+    ListenerService.listen(win);
 });
 
 // on macOS, closing the window doesn't quit the app

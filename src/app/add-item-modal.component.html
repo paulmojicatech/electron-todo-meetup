@@ -1,0 +1,15 @@
+<div class="form-inputs">
+    <mat-form-field>
+        <input type="text" matInput placeholder="To Do Name" [(ngModel)]="data.Name" />
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="data.ToDoDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<div class="dialog-actions">
+    <button mat-raised-button color="primary" [mat-dialog-close]="data">Add</button>
+    <button mat-raised-button (click)="cancelClick()">Cancel</button>
+</div>

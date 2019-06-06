@@ -1,0 +1,13 @@
+<header>
+  To Do List
+  <button mat-raised-button color="primary" (click)="addItem()">Add Item</button>
+</header>
+<section>
+  <mat-list>    
+    <mat-divider></mat-divider>
+    <mat-list-item *ngFor="let item of ToDos$ | async">
+      <mat-checkbox>{{item.Name}}</mat-checkbox>
+      <mat-divider></mat-divider>
+    </mat-list-item>    
+  </mat-list>
+</section>
